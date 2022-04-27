@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="CovidMapper">
+  	<insert id="insert">
+	  	INSERT INTO covid(seq,stateDt,stateTime,decideCnt,deathCnt,createDt,updateDt)
+		VALUES (#{seq},#{stateDt},#{stateTime},#{decideCnt},#{deathCnt},#{createDt},#{updateDt})
+  	</insert>
+  	<update id="update">
+  		UPDATE covid
+		SET stateDt = #{stateDt},
+		stateTime =#{stateTime},
+		decideCnt=#{decideCnt},
+		deathCnt=#{deathCnt},
+		createDt=#{createDt},
+		updateDt=#{updateDt}
+		WHERE seq= #{seq}
+  	</update>
+  	<!-- 일일 확진자수 구하기 -->
+  	<!-- 전행의 누적확진자수 - 형재행 누적확진자수 -->
+  	<select id="selectList" resultType="dto.Covid">
+  		SELECT covid.*,
+			LAG(decideCnt) OVER(ORDER BY stateDt DESC) - decideCnt dailyDecideCnt
+		FROM covid
+		WHERE statedt BETWEEN #{startDt} AND #{endDt}
+  	</select>
+  </mapper>

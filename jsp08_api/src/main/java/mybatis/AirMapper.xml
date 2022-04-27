@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="AirMapper">
+  <select id="selectList" resultType="dto.Air">
+  	SELECT*FROM air
+	WHERE districtName = #{districtName}
+	ORDER BY issuedate DESC
+  </select>
+  
+  <select id="selectOne" resultType="dto.Air">
+  	SELECT*FROM air
+	WHERE sn = #{sn}
+  </select>
+  
+  <insert id="insert">
+	  INSERT INTO air(
+			clearVal,
+			sn,
+			districtName,
+			dataDate,
+			issueVal,
+			issueTime,
+			clearDate,
+			issueDate,
+			moveName,
+			clearTime,
+			issueGbn,
+			itemCode) 
+		VALUES(
+			#{clearVal},
+			#{sn},
+			#{districtName},
+			#{dataDate},
+			#{issueVal},
+			#{issueTime},
+			#{clearDate},
+			#{issueDate},
+			#{moveName},
+			#{clearTime},
+			#{issueGbn},
+			#{itemCode}
+		)
+  </insert>
+  <update id="update">
+  	UPDATE air
+	SET clearVal=#{clearVal},
+		districtName=#{districtName},
+		dataDate=#{dataDate},
+		issueVal=#{issueVal},
+		issueTime=#{issueTime},
+		clearDate=#{clearDate},
+		issueDate=#{issueDate},
+		moveName=#{moveName},
+		clearTime=#{clearTime},
+		issueGbn=#{issueGbn},
+		itemCode=#{itemCode}
+	WHERE sn=#{sn}
+  </update>
+  </mapper>
